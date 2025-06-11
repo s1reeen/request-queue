@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "@/redux/contactsOps";
 import { selectFilteredContacts } from "@/redux/selectors";
-import { RootState, AppDispatch } from "@/redux/store"; // Import AppDispatch
+import { RootState, AppDispatch } from "@/redux/store";
 
 interface Contact {
   id: string;
@@ -13,7 +13,7 @@ interface Contact {
 }
 
 export default function Home() {
-  const dispatch = useDispatch<AppDispatch>(); // Use typed dispatch
+  const dispatch = useDispatch<AppDispatch>();
   const contacts = useSelector<RootState, Contact[] | null>(
     selectFilteredContacts
   );
@@ -21,14 +21,14 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchContacts())
-      .unwrap() // Optional: Use unwrap for better error handling
+      .unwrap()
       .finally(() => setLoading(false));
   }, [dispatch]);
   const skeletonItems = Array.from({ length: 6 });
 
   return (
     <main className="min-h-screen bg-zinc-950 px-4 py-10 text-zinc-50">
-      <h1 className="mb-10 text-center text-3xl font-bold tracking-tight">
+      <h1 className="mb-10 text-center text-5xl font-bold tracking-tight">
         Character Queue
       </h1>
 
@@ -40,7 +40,7 @@ export default function Home() {
                 className="skeleton h-64 w-full overflow-hidden rounded-2xl"
               />
             ))
-          : contacts?.map((c) => (
+          : contacts?.map((c, index) => (
               <div
                 key={c.id}
                 className="group relative h-64 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 transition hover:-translate-y-1 hover:shadow-lg"
@@ -55,7 +55,14 @@ export default function Home() {
                   }
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-zinc-900/80 to-transparent p-4 text-center">
-                  <h2 className="text-sm font-semibold">{c.name}</h2>
+                  <h2 className="text-xl font-semibold tracking-tight">
+                    {c.name}
+                  </h2>
+                  {index === 0 && (
+                    <span className="mt-2 inline-block rounded-full bg-blue-600 px-3 py-1 text-sm font-medium text-white">
+                      In progress
+                    </span>
+                  )}
                 </div>
               </div>
             ))}

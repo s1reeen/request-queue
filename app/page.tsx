@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "@/redux/contactsOps";
 import { selectFilteredContacts } from "@/redux/selectors";
-import { RootState } from "@/redux/store"; // Import RootState
+import { RootState, AppDispatch } from "@/redux/store"; // Import AppDispatch
 
-// Define the Contact type
 interface Contact {
   id: string;
   name: string;
@@ -14,14 +13,16 @@ interface Contact {
 }
 
 export default function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // Use typed dispatch
   const contacts = useSelector<RootState, Contact[] | null>(
     selectFilteredContacts
-  ); // Add type annotation
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchContacts()).finally(() => setLoading(false));
+    dispatch(fetchContacts())
+      .unwrap() // Optional: Use unwrap for better error handling
+      .finally(() => setLoading(false));
   }, [dispatch]);
   const skeletonItems = Array.from({ length: 6 });
 

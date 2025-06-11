@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchContacts } from "./contactsOps";
 
+interface Contact {
+  id: string;
+  name: string;
+  imageUrl: string;
+}
+
 interface ContactsState {
-  items: { id: string; name: string; imageUrl: string }[] | null;
+  items: Contact[] | null;
   loading: boolean;
   error: string | null;
 }

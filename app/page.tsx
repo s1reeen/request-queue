@@ -4,10 +4,20 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "@/redux/contactsOps";
 import { selectFilteredContacts } from "@/redux/selectors";
+import { RootState } from "@/redux/store"; // Import RootState
+
+// Define the Contact type
+interface Contact {
+  id: string;
+  name: string;
+  imageUrl: string;
+}
 
 export default function Home() {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectFilteredContacts);
+  const contacts = useSelector<RootState, Contact[] | null>(
+    selectFilteredContacts
+  ); // Add type annotation
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +28,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 px-4 py-10 text-zinc-50">
       <h1 className="mb-10 text-center text-3xl font-bold tracking-tight">
-        Character&nbsp;Queue
+        Character Queue
       </h1>
 
       <div className="mx-auto grid w-full max-w-5xl grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6">

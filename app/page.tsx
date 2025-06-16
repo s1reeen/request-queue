@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 px-4 py-10 text-zinc-50">
       <h1 className="mb-10 text-center text-5xl font-bold tracking-tight">
-        Character Queue
+        Character Request Queue
       </h1>
 
       <div className="mx-auto grid w-full max-w-5xl grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6">
